@@ -8,6 +8,7 @@ namespace sample3.Data
         public MVCDemoContext(DbContextOptions options) : base(options)
         {
         }
+
         public DbSet<Employees> Employees { get; set; }
 
         

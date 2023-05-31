@@ -18,12 +18,9 @@ namespace sample3.Controllers
         [HttpGet]
         public async Task<IActionResult> index() 
         {
-           
-            return View();
+            var employees = await mvcDemoContext.Employees.ToListAsync();
+            return View(employees);
         }
-
-         
-
 
         //view add employee page
         [HttpGet]
@@ -52,8 +49,61 @@ namespace sample3.Controllers
 
         }
 
+        //get one user details
+        [HttpGet]
+        public async Task<IActionResult> View(Guid id) 
+        { 
+            var employee =await mvcDemoContext.Employees.FirstOrDefaultAsync(x=>x.Id == id);
 
-       
+            if (employee != null) {
+                var viewModel = new UpdateViewModel()
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Email = employee.Email,
+                    Salary = employee.Salary,
+                    Department = employee.Department,
+                    DateOfBirth = employee.DateOfBirth
+
+                };
+                return await Task.Run(()=> View("View",viewModel));
+            }
+            return RedirectToAction("Index");
+        }
+
+        //update one user details
+        [HttpPost]
+        public async Task<IActionResult> View(UpdateViewModel updateViewModel)
+        {
+           var employee = await mvcDemoContext.Employees.FindAsync(updateViewModel.Id);
+
+            if (employee != null) { 
+            employee.Name = updateViewModel.Name;
+            employee.Email= updateViewModel.Email;
+                employee.Salary = updateViewModel.Salary;
+                employee.DateOfBirth = updateViewModel.DateOfBirth;
+                employee.Department = updateViewModel.Department;
+
+                await mvcDemoContext.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UpdateViewModel updateViewModel) {
+            var employee =await mvcDemoContext.Employees.FindAsync(updateViewModel.Id);
+            if (employee != null) {
+
+                mvcDemoContext.Employees.Remove(employee);
+                await mvcDemoContext.SaveChangesAsync();
+                return RedirectToAction("Index");
+
+            }
+            return RedirectToAction("Index");
+        }
+
+
 
 
 

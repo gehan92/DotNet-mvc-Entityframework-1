@@ -1,6 +1,34 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model sample3.Models.UpdateViewModel;
 @{
 }
 <h2>one User details view</h2>
+
+<form method="post" action="View">
+    <div class="mb-3">
+    <label for="" class="form-label">Id</label>
+    <input type="text" class="form-control" asp-for="Id" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="" class="form-label">Name</label>
+    <input type="text" class="form-control" asp-for="Name">
+  </div>
+  <div class="mb-3">
+    <label for="" class="form-label">Email</label>
+    <input type="email" class="form-control" asp-for="Email">
+  </div>
+  <div class="mb-3">
+    <label for="" class="form-label">Name</label>
+    <input type="number" class="form-control" asp-for="Salary">
+  </div>
+  <div class="mb-3">
+    <label for="" class="form-label">DateOfBirth</label>
+    <input type="date" class="form-control" asp-for="DateOfBirth">
+  </div>
+  <div class="mb-3">
+    <label for="" class="form-label">Department</label>
+    <input type="text" class="form-control" asp-for="Department">
+  </div>
+  
+  <button type="submit" class="btn btn-primary" asp-action="">Submit</button>
+   <button type="submit" class="btn btn-primary" asp-controller="Employees" asp-action="Delete">Delete</button>
+</form>
